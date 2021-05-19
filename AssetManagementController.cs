@@ -53,23 +53,23 @@ namespace AssetManagementSystem.Controllers
             return View(assetList);
         }
         [HttpGet]
-        public ActionResult Details(int assetType, int id)
+        public ActionResult Details(TypeOfAsset assetType, int id)
         {
-            AssetModel assetModel = new AssetModel();
+            List<AssetModel> assetList = new List<AssetModel>();
             switch ((int)assetType)
             {
                 case 1:
-                    _Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         Name = x.Name,
                         Id = x.Id,
                         Author = x.Author,
                         DateOfPublish = x.DateOfPublish,
                         Genre = x.Genre
-                    });
+                    }));
                     break;
                 case 2:
-                    _Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Software,
                         Id = x.Id,
@@ -78,10 +78,10 @@ namespace AssetManagementSystem.Controllers
                         DateOfPublish = x.DateOfPublish,
                         Type = x.Type,
                         SoftwareCompany = x.SoftwareCompany
-                    });
+                    }));
                     break;
                 case 3:
-                    _Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Hardware,
                         Id = x.Id,
@@ -89,10 +89,10 @@ namespace AssetManagementSystem.Controllers
                         HardwareCompany = x.HardwareCompany,
                         DateOfPublish = x.DateOfPublish,
                         SupportedDevice = x.SupportedDevice
-                    });
+                    }));
                     break;
             }
-            return View(assetModel);
+            return View(assetModel[0]);
         }
         [HttpGet]
         public ActionResult AddAsset()
@@ -143,23 +143,23 @@ namespace AssetManagementSystem.Controllers
             return View(assetCreate);
         }
         [HttpGet]
-        public ActionResult UpdateAsset(int assetType, int id)
+        public ActionResult UpdateAsset(TypeOfAsset assetType, int id)
         {
-            AssetModel assetModel = new AssetModel();
+            List<AssetModel> assetModel = new List<AssetModel>();
             switch ((int)assetType)
             {
                 case 1:
-                    _Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         Name = x.Name,
                         Id = x.Id,
                         Author = x.Author,
                         DateOfPublish = x.DateOfPublish,
                         Genre = x.Genre
-                    });
+                    }));
                     break;
                 case 2:
-                    _Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Software,
                         Id = x.Id,
@@ -168,10 +168,10 @@ namespace AssetManagementSystem.Controllers
                         DateOfPublish = x.DateOfPublish,
                         Type = x.Type,
                         SoftwareCompany = x.SoftwareCompany
-                    });
+                    }));
                     break;
                 case 3:
-                    _Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Hardware,
                         Id = x.Id,
@@ -179,10 +179,10 @@ namespace AssetManagementSystem.Controllers
                         HardwareCompany = x.HardwareCompany,
                         DateOfPublish = x.DateOfPublish,
                         SupportedDevice = x.SupportedDevice
-                    });
+                    }));
                     break;
             }
-            return View(assetModel);
+            return View(assetModel[0]);
         }
         [HttpPost]
         public ActionResult UpdateAsset(AssetModel assetEdit)
@@ -240,21 +240,21 @@ namespace AssetManagementSystem.Controllers
         [HttpGet]
         public ActionResult DeleteAsset(int assetType, int id)
         {
-            AssetModel assetModel = new AssetModel();
+            List<AssetModel> assetModel = new List<AssetModel>();
             switch ((int)assetType)
             {
                 case 1:
-                    _Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         Name = x.Name,
                         Id = x.Id,
                         Author = x.Author,
                         DateOfPublish = x.DateOfPublish,
                         Genre = x.Genre
-                    });
+                    }));
                     break;
                 case 2:
-                    _Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Software,
                         Id = x.Id,
@@ -263,10 +263,10 @@ namespace AssetManagementSystem.Controllers
                         DateOfPublish = x.DateOfPublish,
                         Type = x.Type,
                         SoftwareCompany = x.SoftwareCompany
-                    });
+                    }));
                     break;
                 case 3:
-                    _Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
+                    assetModel.AddRange(_Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Hardware,
                         Id = x.Id,
@@ -274,10 +274,10 @@ namespace AssetManagementSystem.Controllers
                         HardwareCompany = x.HardwareCompany,
                         DateOfPublish = x.DateOfPublish,
                         SupportedDevice = x.SupportedDevice
-                    });
+                    }));
                     break;
             }
-            return View(assetModel);
+            return View(assetModel[0]);
         }
         [HttpPost]
         public ActionResult DeleteAsset(AssetModel assetDelete)
