@@ -232,10 +232,9 @@ namespace AssetManagementSystem.Controllers
             }
         }
         [HttpPost]
-        public ActionResult DeleteAsset(AssetModel assetDelete)
+        public ActionResult DeleteAsset(TypeOfAsset assetType,int id)
         {
-            List<AssetModel> assetList = new List<AssetModel>();
-            switch ((int)assetDelete.AssetType)
+            switch ((int)assetType)
             {
                 case 1:
                     var asset = _Context.BookAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
@@ -251,7 +250,9 @@ namespace AssetManagementSystem.Controllers
                     break;
             }
             _Context.SaveChanges();
-            return View(assetDelete);
+            string message = "Deleted the Asset successfully";
+            ViewBag.Message = message;
+            return View(ViewBag.Message);
         }
     }
 }
