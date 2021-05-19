@@ -152,7 +152,6 @@ namespace AssetManagementSystem.Controllers
                     assetModel.AddRange(_Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         Name = x.Name,
-                        Id = x.Id,
                         Author = x.Author,
                         DateOfPublish = x.DateOfPublish,
                         Genre = x.Genre
@@ -162,7 +161,6 @@ namespace AssetManagementSystem.Controllers
                     assetModel.AddRange(_Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Software,
-                        Id = x.Id,
                         Name = x.Name,
                         OsPlatform = x.OsPlatform,
                         DateOfPublish = x.DateOfPublish,
@@ -174,7 +172,6 @@ namespace AssetManagementSystem.Controllers
                     assetModel.AddRange(_Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
                     {
                         AssetType = TypeOfAsset.Hardware,
-                        Id = x.Id,
                         Name = x.Name,
                         HardwareCompany = x.HardwareCompany,
                         DateOfPublish = x.DateOfPublish,
@@ -194,7 +191,6 @@ namespace AssetManagementSystem.Controllers
                 {
                     case 1:
                         BookAsset book = new BookAsset();
-                        book.Id = assetEdit.Id;
                         book.Name = assetEdit.Name;
                         book.DateOfPublish = assetEdit.DateOfPublish;
                         book.Author = assetEdit.Author;
@@ -205,7 +201,6 @@ namespace AssetManagementSystem.Controllers
 
                     case 2:
                         SoftwareAsset software = new SoftwareAsset();
-                        software.Id = assetEdit.Id;
                         software.Name = assetEdit.Name;
                         software.DateOfPublish = assetEdit.DateOfPublish;
                         software.OsPlatform = assetEdit.OsPlatform;
@@ -216,7 +211,6 @@ namespace AssetManagementSystem.Controllers
 
                     case 3:
                         HardwareAsset hardware = new HardwareAsset();
-                        hardware.Id = assetEdit.Id;
                         hardware.Name = assetEdit.Name;
                         hardware.DateOfPublish = assetEdit.DateOfPublish;
                         hardware.HardwareCompany = assetEdit.HardwareCompany;
@@ -237,48 +231,6 @@ namespace AssetManagementSystem.Controllers
                 return View(ViewBag.Message);
             }
         }
-        [HttpGet]
-        public ActionResult DeleteAsset(int assetType, int id)
-        {
-            List<AssetModel> assetModel = new List<AssetModel>();
-            switch ((int)assetType)
-            {
-                case 1:
-                    assetModel.AddRange(_Context.BookAssets.Where(x => x.Id == id).Select(x => new AssetModel
-                    {
-                        Name = x.Name,
-                        Id = x.Id,
-                        Author = x.Author,
-                        DateOfPublish = x.DateOfPublish,
-                        Genre = x.Genre
-                    }));
-                    break;
-                case 2:
-                    assetModel.AddRange(_Context.SoftwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
-                    {
-                        AssetType = TypeOfAsset.Software,
-                        Id = x.Id,
-                        Name = x.Name,
-                        OsPlatform = x.OsPlatform,
-                        DateOfPublish = x.DateOfPublish,
-                        Type = x.Type,
-                        SoftwareCompany = x.SoftwareCompany
-                    }));
-                    break;
-                case 3:
-                    assetModel.AddRange(_Context.HardwareAssets.Where(x => x.Id == id).Select(x => new AssetModel
-                    {
-                        AssetType = TypeOfAsset.Hardware,
-                        Id = x.Id,
-                        Name = x.Name,
-                        HardwareCompany = x.HardwareCompany,
-                        DateOfPublish = x.DateOfPublish,
-                        SupportedDevice = x.SupportedDevice
-                    }));
-                    break;
-            }
-            return View(assetModel[0]);
-        }
         [HttpPost]
         public ActionResult DeleteAsset(AssetModel assetDelete)
         {
@@ -286,32 +238,14 @@ namespace AssetManagementSystem.Controllers
             switch ((int)assetDelete.AssetType)
             {
                 case 1:
-                    BookAsset book = new BookAsset();
-                    book.Id = assetDelete.Id;
-                    book.Name = assetDelete.Name;
-                    book.DateOfPublish = assetDelete.DateOfPublish;
-                    book.Author = assetDelete.Author;
-                    book.Genre = assetDelete.Genre;
                     var asset = _Context.BookAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
                     _Context.BookAssets.Remove(asset);
                     break;
                 case 2:
-                    SoftwareAsset software = new SoftwareAsset();
-                    software.Id = assetDelete.Id;
-                    software.Name = assetDelete.Name;
-                    software.DateOfPublish = assetDelete.DateOfPublish;
-                    software.OsPlatform = assetDelete.OsPlatform;
-                    software.Type = assetDelete.Type;
                     var asset1 = _Context.SoftwareAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
                     _Context.SoftwareAssets.Remove(asset1);
                     break;
                 case 3:
-                    HardwareAsset hardware = new HardwareAsset();
-                    hardware.Id = assetDelete.Id;
-                    hardware.Name = assetDelete.Name;
-                    hardware.DateOfPublish = assetDelete.DateOfPublish;
-                    hardware.HardwareCompany = assetDelete.HardwareCompany;
-                    hardware.SupportedDevice = assetDelete.SupportedDevice;
                     var asset2 = _Context.HardwareAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
                     _Context.HardwareAssets.Remove(asset2);
                     break;
