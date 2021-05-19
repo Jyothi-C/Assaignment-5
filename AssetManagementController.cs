@@ -107,7 +107,6 @@ namespace AssetManagementSystem.Controllers
                 switch ((int)assetCreate.AssetType)
                 {
                     case 1:
-                        assetList.Add(assetCreate);
                         BookAsset book = new BookAsset();
                         book.Id = assetCreate.Id;
                         book.Name = assetCreate.Name;
@@ -117,7 +116,6 @@ namespace AssetManagementSystem.Controllers
                         _Context.BookAssets.Add(book);
                         break;
                     case 2:
-                        assetList.Add(assetCreate);
                         SoftwareAsset software = new SoftwareAsset();
                         software.Id = assetCreate.Id;
                         software.Name = assetCreate.Name;
@@ -128,7 +126,6 @@ namespace AssetManagementSystem.Controllers
                         _Context.SoftwareAssets.Add(software);
                         break;
                     case 3:
-                        assetList.Add(assetCreate);
                         HardwareAsset hardware = new HardwareAsset();
                         hardware.Id = assetCreate.Id;
                         hardware.Name = assetCreate.Name;
@@ -196,7 +193,6 @@ namespace AssetManagementSystem.Controllers
                 switch ((int)assetEdit.AssetType)
                 {
                     case 1:
-                        assetList.Add(assetEdit);
                         BookAsset book = new BookAsset();
                         book.Id = assetEdit.Id;
                         book.Name = assetEdit.Name;
@@ -306,8 +302,8 @@ namespace AssetManagementSystem.Controllers
                     software.DateOfPublish = assetDelete.DateOfPublish;
                     software.OsPlatform = assetDelete.OsPlatform;
                     software.Type = assetDelete.Type;
-                    var asset1 = _Context.BookAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
-                    _Context.BookAssets.Remove(asset1);
+                    var asset1 = _Context.SoftwareAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
+                    _Context.SoftwareAssets.Remove(asset1);
                     break;
                 case 3:
                     HardwareAsset hardware = new HardwareAsset();
@@ -316,8 +312,8 @@ namespace AssetManagementSystem.Controllers
                     hardware.DateOfPublish = assetDelete.DateOfPublish;
                     hardware.HardwareCompany = assetDelete.HardwareCompany;
                     hardware.SupportedDevice = assetDelete.SupportedDevice;
-                    var asset2 = _Context.BookAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
-                    _Context.BookAssets.Remove(asset2);
+                    var asset2 = _Context.HardwareAssets.FirstOrDefault(b => b.Id == assetDelete.Id);
+                    _Context.HardwareAssets.Remove(asset2);
                     break;
             }
             _Context.SaveChanges();
